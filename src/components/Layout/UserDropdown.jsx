@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { RiHotelFill } from "react-icons/ri";
 import { FaUser, FaMoon, FaGlobe, FaSignOutAlt } from "react-icons/fa";
 import { MdSunny } from "react-icons/md";
 
 import ProfileModalForm from "@/components/modals/user/profileModal";
+import UserManualModal from "@/components/modals/user/UserManualModal";
 
 const UserModal = ({
     isOpen,
@@ -18,6 +19,7 @@ const UserModal = ({
     handleLogout,
 }) => {
     const modalRef = useRef(null);
+    const [isUserManualOpen, setIsUserManualOpen] = useState(false);
 
     // Fecha o modal clicando fora
     useEffect(() => {
@@ -31,6 +33,9 @@ const UserModal = ({
         }
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [isOpen, onClose]);
+
+    const closeUserManual = () => setIsUserManualOpen(false);
+    const openUserManual = () => setIsUserManualOpen(true);
 
     if (!isOpen) return null;
 
@@ -96,6 +101,9 @@ const UserModal = ({
                             <option value="es">Es</option>
                         </select>
                     </li>
+                    <li>
+                        <button onClick={openUserManual}>User Manual</button>
+                    </li>
                     <li
                         onClick={handleLogout}
                         className="flex items-center text-red-500 cursor-pointer text-sm"
@@ -104,6 +112,11 @@ const UserModal = ({
                         {t.navbar.text.logout}
                     </li>
                 </ul>
+
+                {/* User Manual Modal */}
+                {isUserManualOpen && (
+                    <UserManualModal isOpen={isUserManualOpen} onClose={closeUserManual} />
+                )}
             </div>
         </div>
     );

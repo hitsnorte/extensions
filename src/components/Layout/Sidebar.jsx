@@ -6,6 +6,7 @@ import { signOut, useSession } from "next-auth/react"; // Importando a função 
 import { useRouter } from "next/navigation"; // Importando o hook de navegação
 import { FaSignOutAlt } from "react-icons/fa"; // Importa o ícone de logout
 import { FaUser } from "react-icons/fa";
+import { FaBook } from "react-icons/fa";
 import { RiHotelFill } from "react-icons/ri";
 
 import en from "../../../public/locales/english/common.json";
@@ -19,6 +20,7 @@ import { IoMdClose } from "react-icons/io";
 import { Dialog } from "@headlessui/react";
 
 import ProfileModalForm from "@/components/modals/user/profileModal";
+import UserManualModal from "@/components/modals/user/UserManualModal";
 
 const SidebarContext = createContext();
 let inactivityTimeout;
@@ -35,6 +37,9 @@ export default function Sidebar({ children, setExpanded }) {
   // const modalRef = useRef(null); // Novo ref para o modal
 
   const [locale, setLocale] = useState("pt");
+  const [isUserManualOpen, setIsUserManualOpen] = useState(false);
+  const openUserManual = () => setIsUserManualOpen(true);
+const closeUserManual = () => setIsUserManualOpen(false);
 
   useEffect(() => {
     // Carregar o idioma do localStorage
@@ -343,6 +348,21 @@ export default function Sidebar({ children, setExpanded }) {
                       </span>
                     </button>
                   </li>
+
+                  <li>
+  <button
+    onClick={openUserManual}
+    className="flex items-center py-2 px-3 w-full text-left hover:bg-background rounded-md"
+  >
+    <FaBook className="mr-2" />
+    Manual
+  </button>
+</li>
+
+  <UserManualModal
+    isOpen={isUserManualOpen}
+    onClose={closeUserManual}
+  />
 
                   {/* Idiomas */}
                   <li className="py-2 px-3 rounded-md flex flex-row justify-between">
