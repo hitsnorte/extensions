@@ -352,6 +352,13 @@
             "expirationDate": "Expiration Date",
             "submit": "Submit"
         },
+        "editVatNo": {
+            "title": "Edit VAT No",
+            "currentVatNo": "Current VAT No:",
+            "newVatNo": "New VAT No:",
+            "cancel": "Cancel",
+            "save": "Save"
+        },
         "createProperty": {
             "propertyDetails": "Property Details",
             "propertyName": "Property Name",

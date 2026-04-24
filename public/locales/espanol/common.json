@@ -354,6 +354,13 @@
             "expirationDate": "Fecha de expiración",
             "submit": "Ahorrar"
         },
+        "EditVatNo": {
+            "title": "Editar Número de IVA",
+            "currentVatNo": "Número de IVA Actual:",
+            "newVatNo": "Nuevo Número de IVA:",
+            "cancel": "Cancelar",
+            "save": "Guardar"
+        },
         "createProperty": {
             "propertyDetails": "Detalles de la propiedad",
             "propertyName": "Nombre de la propiedad",

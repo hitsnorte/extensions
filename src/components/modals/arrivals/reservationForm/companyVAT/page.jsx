@@ -13,13 +13,13 @@ import es from "../../../../../../public/locales/espanol/common.json";
 
 const translations = { en, pt, es };
 
-const MultiModalManager = ({ openModal, setOpenModal, propertyID, onSave, profileID, resNo, companyID, companyData }) => {
+const MultiModalManager = ({ openModal, setOpenModal, propertyID, onSave, profileID, resNo, companyID, companyData, locale = "pt" }) => {
     const [activeModal, setActiveModal] = useState(null); // "edit" | "insert" | "search" | null
     const [isResultsModalOpen, setIsResultsModalOpen] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
     const [insertFormData, setInsertFormData] = useState({ companyName: "", vatNo: "" });
     const [pageNumber, setPageNumber] = useState(1);
-    const t = translations.pt; // você pode trocar para locale dinâmico
+    const t = translations[locale]; // Dynamically select translations based on locale
     const inputRef = useRef(null);
     const vatRef = useRef(null);
     // const [locale, setLocale] = useState("pt");

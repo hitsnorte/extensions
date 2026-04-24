@@ -1932,7 +1932,7 @@ useEffect(() => {
                                             style={`${inputStyleFullWithLine}`}
                                             disabled
                                         />
-                                        <div className='flex flex-row justify-between items-center gap-4 mt-4'>
+                                        <div className='flex flex-row justify-between gap-4 mt-4'>
                                             {/* <CountryAutocomplete
                                         label={"ID Doc"}
                                         style={"w-32 h-20"}
@@ -2213,6 +2213,7 @@ useEffect(() => {
                                             companyID={reserva.CompanyID}
                                             companyData={companyVATData}
                                             onSave={(payload) => setNewCompany(payload)}
+                                            locale={locale} // Pass locale dynamically
                                         />
                                     )}
 
@@ -2266,6 +2267,7 @@ useEffect(() => {
                                                 // Also update reserva locally if needed
                                                 reserva.hasCompanyVAT = 1;
                                             }}
+                                            locale={locale} // Pass locale dynamically
                                         />
                                     )}
                                 </div>
@@ -2718,17 +2720,15 @@ useEffect(() => {
                                                                             classNames={{
                                                                                 control: (state) =>
                                                                                     `!bg-background !text-textPrimaryColor !border !border-gray-300 !rounded-md 
-                                                                                ${!missingValues["IDDoc"] ? "border-red-500" : "border-gray-300"} 
-                                                                                ${state.isFocused ? '!border-blue-500' : ''
-                                                                                    }`,
+                                                                                ${!missingValues["IDDoc"] ? "border-red-500" : "border-gray-300"}
+                                                                                ${state.isFocused ? '!border-blue-500' : ''}`,
                                                                                 menu: () => '!bg-background !text-textPrimaryColor',
                                                                                 option: (state) =>
                                                                                     `!cursor-pointer ${state.isSelected
                                                                                         ? '!bg-primary !text-white'
                                                                                         : state.isFocused
                                                                                             ? '!bg-primary-100 !text-black'
-                                                                                            : '!bg-background !text-textPrimaryColor'
-                                                                                    }`,
+                                                                                            : '!bg-background !text-textPrimaryColor'}`,
                                                                                 singleValue: () => '!text-textPrimaryColor',
                                                                                 placeholder: () => '!text-gray-400',
                                                                             }}

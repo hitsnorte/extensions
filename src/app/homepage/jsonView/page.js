@@ -568,6 +568,7 @@ const sendResToAPI = async (ResNo) => {
               {isModalEditOpen && (
                 <EditVatNoModal
                   oldVatNo={vatNo} // Passa o VAT No atual
+                  locale={locale}
                   onSave={(newValue) => {
                     console.log("Novo VAT No salvo:", newValue);
                     setVatNo(newValue); // Atualiza o estado corretamente

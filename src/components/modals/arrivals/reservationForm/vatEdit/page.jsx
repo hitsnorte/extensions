@@ -3,10 +3,17 @@ import React, { useState, useEffect, useRef } from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, Button } from "@heroui/react";
 import { MdClose } from "react-icons/md";
 
-const EditVatNoModal = ({ oldVatNo, onSave, onClose }) => {
+import en from "../../../../../../public/locales/english/common.json";
+import pt from "../../../../../../public/locales/portuguesPortugal/common.json";
+import es from "../../../../../../public/locales/espanol/common.json";
+
+const translations = { en, pt, es };
+
+const EditVatNoModal = ({ oldVatNo, onSave, onClose,  locale = "pt"  }) => {
     const [newVatNo, setNewVatNo] = useState(""); // Novo VAT No digitado pelo usuário
     const [errorMessage, setErrorMessage] = useState("");
     const inputRef = useRef(null); // Referência para o input
+    const t = translations[locale]; 
 
     useEffect(() => {
         setNewVatNo(""); // Reseta o campo sempre que o modal abrir
@@ -51,7 +58,7 @@ const EditVatNoModal = ({ oldVatNo, onSave, onClose }) => {
                         <ModalBody className="flex flex-col mx-5 my-5 space-y-4 text-textPrimaryColor">
                             {/* VAT No Atual (Antigo) */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-400">Current VAT No:</label>
+                                <label className="block text-sm font-medium text-gray-400">{`${t.modals.editVatNo.currentVatNo}`}</label>
                                 <input
                                     type="text"
                                     value={oldVatNo}
@@ -62,7 +69,7 @@ const EditVatNoModal = ({ oldVatNo, onSave, onClose }) => {
 
                             {/* Novo VAT No */}
                             <div>
-                                <label className="block text-sm font-medium text-textPrimaryColor">New VAT No:</label>
+                                <label className="block text-sm font-medium text-textPrimaryColor">{`${t.modals.editVatNo.newVatNo}`}</label>
                                 <input
                                     ref={inputRef}
                                     type="text"
@@ -76,10 +83,10 @@ const EditVatNoModal = ({ oldVatNo, onSave, onClose }) => {
                             {/* Botões */}
                             <div className="flex justify-end space-x-2">
                                 <Button color="error" onClick={onCloseModal}>
-                                    Cancel
+                                    {`${t.modals.editVatNo.cancel}`}
                                 </Button>
                                 <Button color="primary" onClick={handleSave}>
-                                    Save
+                                    {`${t.modals.editVatNo.save}`}
                                 </Button>
                             </div>
                         </ModalBody>
