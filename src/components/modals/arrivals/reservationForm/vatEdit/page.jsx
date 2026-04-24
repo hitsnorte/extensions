@@ -83,7 +83,7 @@ const EditVatNoModal = ({ oldVatNo, onSave, onClose,  locale = "pt"  }) => {
                             {/* Botões */}
                             <div className="flex justify-end space-x-2">
                                 <Button color="error" onClick={onCloseModal}>
-                                    {`${t.modals.editVatNo.cancel}`}
+                                    {`${t.modals.editVatNo.cancel}`} 
                                 </Button>
                                 <Button color="primary" onClick={handleSave}>
                                     {`${t.modals.editVatNo.save}`}
