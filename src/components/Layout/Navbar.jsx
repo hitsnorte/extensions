@@ -20,15 +20,11 @@ const translations = { en, pt, es };
 export default function NavBar({ listItems, hotels = [], selectedHotelID, setSelectedHotelID }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState(new Set());
-  const [warningVisible, setWarningVisible] = useState(false);
-  const [countdown, setCountdown] = useState(60);
   const [userMenuOpen, setUserMenuOpen] = useState(false); // Novo estado para o menu do usuário
   const { data: session } = useSession();
-  let inactivityTimeout;
-  let warningTimeout;
 
   const [locale, setLocale] = useState("pt");
-    
+
   useEffect(() => {
     // Carregar o idioma do localStorage
     const storedLanguage = localStorage.getItem("language");
@@ -36,7 +32,7 @@ export default function NavBar({ listItems, hotels = [], selectedHotelID, setSel
       setLocale(storedLanguage);
     }
   }, []);
-    
+
   // Carregar as traduções com base no idioma atual
   const t = translations[locale] || translations["pt"]; // fallback para "pt"
 
@@ -68,64 +64,6 @@ export default function NavBar({ listItems, hotels = [], selectedHotelID, setSel
     setSelectedHotelID(hotelID);
     localStorage.setItem("selectedHotelID", hotelID);
   };
-
-  const stopActivityListeners = () => {
-    window.removeEventListener("mousemove", resetInactivityTimer);
-    window.removeEventListener("keydown", resetInactivityTimer);
-  };
-
-  const startActivityListeners = () => {
-    window.addEventListener("mousemove", resetInactivityTimer);
-    window.addEventListener("keydown", resetInactivityTimer);
-  };
-
-  const resetInactivityTimer = () => {
-    if (warningVisible) return; // Não reiniciar se o aviso estiver visível
-
-    clearTimeout(inactivityTimeout);
-    clearTimeout(warningTimeout);
-    setWarningVisible(false);
-    setCountdown(60);
-
-    warningTimeout = setTimeout(() => {
-      setWarningVisible(true);
-      stopActivityListeners(); // Parar detectores de atividade
-      startCountdown();
-    }, 14 * 60 * 1000);
-
-    inactivityTimeout = setTimeout(() => {
-      handleLogout();
-    }, 15 * 60 * 1000);
-  };
-
-  const startCountdown = () => {
-    let timeLeft = 60;
-    const interval = setInterval(() => {
-      timeLeft -= 1;
-      setCountdown(timeLeft);
-      if (timeLeft <= 0) {
-        clearInterval(interval);
-      }
-    }, 1000);
-  };
-
-  const handleContinueSession = () => {
-    setWarningVisible(false);
-    setCountdown(60);
-    startActivityListeners(); // Reiniciar detectores de atividade
-    resetInactivityTimer();
-  };
-
-  useEffect(() => {
-    startActivityListeners();
-    resetInactivityTimer();
-
-    return () => {
-      stopActivityListeners();
-      clearTimeout(inactivityTimeout);
-      clearTimeout(warningTimeout);
-    };
-  }, []);
 
   const [isDarkMode, setIsDarkMode] = useState(false); // Controle do tema
 
@@ -328,29 +266,6 @@ export default function NavBar({ listItems, hotels = [], selectedHotelID, setSel
                   )}
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Modal Warning */}
-      {warningVisible && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50">
-          <div className="bg-white p-6 rounded shadow-md w-80 text-center">
-            <h1 className="text-xl font-bold mb-4">{t.navbar.alert.messagePart1} {countdown} {t.navbar.alert.messagePart2}</h1>
-            <div className="flex justify-around mt-4">
-              <button
-                onClick={handleContinueSession}
-                className="bg-primary text-white px-4 py-2 rounded hover:bg-green-600"
-              >
-                {t.navbar.alert.continue}
-              </button>
-              <button
-                onClick={() => signOut({ callbackUrl: "/auth" })}
-                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-              >
-                {t.navbar.alert.logout}
-              </button>
             </div>
           </div>
         </div>
